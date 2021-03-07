@@ -5,7 +5,7 @@ build:
 fmt:
 	go fmt ./...
 
-publish: publish-server; publish-client
+publish: publish-server publish-client
 
 publish-server:
 	GOOS=freebsd GOARCH=386 go build -o bin/xavier-server-freebsd-386 server/cmd/main.go
