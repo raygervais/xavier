@@ -29,39 +29,6 @@ func (api ApplicationInterface) entry(c *fiber.Ctx) error {
 	return c.SendString("Xavier, Version 0.1.0!")
 }
 
-/*
- * API ROUTES
- * URL Entry: /logs
- */
-func (api ApplicationInterface) getAllLogEntries(c *fiber.Ctx) error {
-	return nil
-}
-
-func (api ApplicationInterface) getAllLogsBySearch(c *fiber.Ctx) error {
-	searchString := c.Params("search")
-	rows, err := api.database.SearchLogsTable(searchString, 10)
-	if err != nil {
-		api.errorHandler(
-			c,
-			"getAllLogsBySearch",
-			err.Error(),
-			searchString,
-			400,
-		)
-		return err
-	}
-
-	logs := []models.LogEntry{}
-
-	for rows.Next() {
-		log := models.LogEntry{}
-		rows.Scan(&log.RowID, &log.Data, &log.Date, &log.Type)
-		logs = append(logs, log)
-	}
-
-	return c.JSON(logs)
-}
-
 func (api ApplicationInterface) errorHandler(
 	c *fiber.Ctx,
 	origin, context, params string,

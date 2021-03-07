@@ -5,6 +5,7 @@ go 1.15
 require (
 	github.com/alecthomas/units v0.0.0-20210208195552-ff826a37aa15 // indirect
 	github.com/dave/dst v0.26.2 // indirect
+	github.com/gofiber/fiber v1.14.6
 	github.com/gofiber/fiber/v2 v2.5.0
 	github.com/konsorten/go-windows-terminal-sequences v1.0.3 // indirect
 	github.com/magefile/mage v1.11.0 // indirect
