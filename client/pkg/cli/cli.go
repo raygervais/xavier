@@ -20,6 +20,7 @@ func Init(api api.API) CommandLineInterface {
 
 	cli.commands = map[string]func() func(string) error{
 		"health": cli.health,
+		"test":   cli.test,
 	}
 
 	return cli
@@ -54,14 +55,18 @@ func (cli CommandLineInterface) Help() {
 	fmt.Printf("Usage of %s:\n <command> [<args>]\n%s", os.Args[0], help)
 }
 
-func (cli CommandLineInterface) validateConnection() func(string) error {
-	return func(cmd string) error {
-		return nil
-	}
-}
-
 func (cli CommandLineInterface) health() func(string) error {
 	return func(cmd string) error {
 		return cli.api.HealthCheck()
+	}
+}
+
+// NOTE: Temp function for now.
+func (cli CommandLineInterface) test() func(string) error {
+	return func(cmd string) error {
+		resp, err := cli.api.GetAll()
+
+		fmt.Println(resp)
+		return err
 	}
 }
