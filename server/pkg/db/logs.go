@@ -18,11 +18,14 @@ func (db Database) initializeLogsTable() error {
 	return db.initProvidedTable(query, "logs")
 }
 
+// GetAllLogEntries handles querying the DB for all log entries
 func (db Database) GetAllLogEntries() (*sql.Rows, error) {
 	query := `SELECT rowid, date, type, data FROM logs`
 	return db.execQueryStatement(query)
 }
 
+// SearchLogsTable handles querying the DB for all log entires
+// which comply with the search string
 func (db Database) SearchLogsTable(
 	search string,
 	limit int,

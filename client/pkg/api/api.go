@@ -8,40 +8,38 @@ import (
 	"github.com/raygervais/xavier/client/pkg/conf"
 )
 
+// API is a wrapper instance which contains application configuration
 type API struct {
 	config conf.Configuration
 }
 
+// Init creates the API instance configured
+// to user requirements, ex. Server URL
 func Init(config conf.Configuration) API {
 	return API{
 		config: config,
 	}
 }
 
+// HealthCheck verifies that the CLI can connect
+// to the server specified in the configuration
 func (api API) HealthCheck() error {
-	_, err := http.Get(api.config.ServerLocation)
-	return err
-}
-
-func (api API) GetAll() (string, error) {
 	resp, err := http.Get(api.config.ServerLocation)
 	if err != nil {
-		return "", fmt.Errorf(
-			"error while reaching out to server %s: %s",
-			api.config.ServerLocation,
+		return err
+	}
+
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	body := string(bodyBytes)
+	if resp.StatusCode != 200 {
+		return fmt.Errorf(
+			"Received different status code than 200. %s\n%s",
+			body,
 			err,
 		)
 	}
 
-	defer resp.Body.Close()
+	println(body)
 
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return "", fmt.Errorf(
-			"error while attempting to read response body: %s",
-			err,
-		)
-	}
-
-	return string(body), nil
+	return nil
 }

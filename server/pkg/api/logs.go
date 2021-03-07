@@ -45,7 +45,12 @@ func (api ApplicationInterface) getAllLogsBySearch(c *fiber.Ctx) error {
 	return c.JSON(logs)
 }
 
-func (api ApplicationInterface) iterateOverLogRows(rows *sql.Rows, logs *[]models.LogEntry) {
+// Helper function which allows us to pass in a SQL.rows object,
+// and an array to be filled from the returned query.
+func (api ApplicationInterface) iterateOverLogRows(
+	rows *sql.Rows,
+	logs *[]models.LogEntry,
+) {
 	for rows.Next() {
 		log := models.LogEntry{}
 		rows.Scan(&log.RowID, &log.Data, &log.Date, &log.Type)

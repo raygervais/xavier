@@ -14,7 +14,7 @@ type Configuration struct {
 
 // ApplicationConfiguration is Singleton instance of Configuration to be passed around server
 var ApplicationConfiguration = Configuration{
-	ServerLocation: "https://jsonplaceholder.typicode.com/todos/",
+	ServerLocation: "localhost:8080",
 }
 
 const (

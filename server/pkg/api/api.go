@@ -29,6 +29,7 @@ func (api ApplicationInterface) entry(c *fiber.Ctx) error {
 	return c.SendString("Xavier, Version 0.1.0!")
 }
 
+// wrapper around Fiber's c.Status and c.JSON to reduce code repetition.
 func (api ApplicationInterface) errorHandler(
 	c *fiber.Ctx,
 	origin, context, params string,
